@@ -1,0 +1,58 @@
+FORMAT: 1A
+HOST: http://localhost/api
+
+# User API
+ユーザー情報を更新するためのAPIです
+
+## ユーザー取得 [GET /users/{id}]
+ログイン中のユーザー情報の取得
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        + user_id: `takakura` (string) - ユーザ権限
+
++ Response 400 (application/json)
+    + Attributes
+        + message: `NG` (string)　- メッセージ
+        + detail: `データを取得できませんでした` (string)　- メッセージ内容
+
+## ユーザー登録 [POST /users]
+新規ユーザーを登録する
+
++ Request (application/json)
+    + Attributes
+        + user_id: `takakura` (string) - ユーザーID
+        + password: `test1234` (string) - パスワード
+
++ Response 200 (application/json)
+    + Attributes
+        + message: `OK` (string) - ユーザ権限
+        + detail: `ユーザ情報を登録しました！` (string) - ユーザ権限
+
+## ユーザー削除 [DELETE /users/{id}]
+ユーザー情報を削除する
+
++ Response 200 (application/json)
+    + Attributes
+        + message: `OK` (string)　-ユーザー権限
+        + detail: `データを削除しました` (string)　-ユーザー権限
+
+
++ Parameters
+    + id: `1` (number, required)
+
+
+
+## ユーザー更新 [PUT /users/{id}]
+ユーザー情報を更新する
+
++ Parameters
+    + id: `1` (number, required)
+
++ Response 200 (application/json)
+    + Attributes
+        + message: `OK` (string)　-ユーザー権限
+        + detail: `ユーザー情報を更新しました` (string)　-ユーザー権限
