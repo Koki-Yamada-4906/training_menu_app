@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <title>筋トレメニューアプリ(仮)</title>
-    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <header className="bg-gray-700">
+    <div class="text-center m-5">
       <nav>
         <h2>筋トレメニュー</h2>
         <ul>
@@ -16,13 +16,13 @@
           <li></li>
         </ul>
       </nav>
-    </header>
-    <form action="{% url 'login' %}" method="post">
+    </div>
+    <form action="{% url 'App:login' %}" method="post">
     {% csrf_token %}
         {{ form.as_p }}
         <p><input type="submit" value="ログイン"></p>
     </form>
-    <form action="{% url 'signup' %}" method="post">
+    <form action="{% url 'App:signup' %}" method="post">
     {% csrf_token %}
         {{ form.as_p }}
         <p><input type="submit" value="新規登録"></p>
