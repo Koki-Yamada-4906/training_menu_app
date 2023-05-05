@@ -1,2 +1,4 @@
 #仮想環境
 .myenv
+#tailwind css 設定ファイル
+.tools

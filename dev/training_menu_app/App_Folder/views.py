@@ -73,4 +73,9 @@ def other_view(request):
 
     return render(request, 'other.html', params)
 
+#アンケート画面
+def opinionaire_view(request):
+    
+    return render(request, 'opinionaire.html')
+
 
