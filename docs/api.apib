@@ -12,19 +12,19 @@ HOST: http://localhost/api
 
 + Response 200 (application/json)
     + Attributes
-        + user_id: `takakura` (string) - ユーザ権限
+        + user_id: `yamada` (string) - ユーザ権限
 
 + Response 400 (application/json)
     + Attributes
         + message: `NG` (string)　- メッセージ
         + detail: `データを取得できませんでした` (string)　- メッセージ内容
 
-## ユーザー登録 [POST /users]
+## ユーザー登録 [POST /signup]
 新規ユーザーを登録する
 
 + Request (application/json)
     + Attributes
-        + user_id: `takakura` (string) - ユーザーID
+        + user_id: `yamada` (string) - ユーザーID
         + password: `test1234` (string) - パスワード
 
 + Response 200 (application/json)
