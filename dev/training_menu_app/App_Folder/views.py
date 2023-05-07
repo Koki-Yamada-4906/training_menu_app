@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from .forms import SignupForm, LoginForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 
 def template_view(request):
 
@@ -29,22 +31,31 @@ def signup_view(request):
 #ログイン処理
 def login_view(request):
     if request.method == 'POST':
-        form = LoginForm(request, data=request.POST)
-        
-        if form.is_valid():
-            user = form.get_user()
-            
-            if user:
-                login(request, user)
-                
+        # フォーム入力のユーザーID・パスワード取得
+        ID = request.POST.get('userid')
+        Pass = request.POST.get('password')
+
+        # Djangoの認証機能
+        user = authenticate(username=ID, password=Pass)
+
+        # ユーザー認証
+        if user:
+            #ユーザーアクティベート判定
+            if user.is_active:
+                # ログイン
+                login(request,user)
+                # ホームページ遷移
+                return HttpResponseRedirect(reverse('App:list'))
+            else:
+                # アカウント利用不可
+                return HttpResponse("アカウントが有効ではありません")
+        # ユーザー認証失敗
+        else:
+            return HttpResponse("ログインIDまたはパスワードが間違っています")
+    # GET
     else:
-        form = LoginForm()
-         
-    param = {
-        'form': form,
-    }
+        return render(request, 'login.html')
     
-    return render(request, 'login.html', param)
 #ログアウト処理
 def logout_view(request):
     logout(request)
