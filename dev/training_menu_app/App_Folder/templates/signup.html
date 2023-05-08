@@ -15,18 +15,23 @@
 <div class="flex flex-col justify-center items-center  px-auto mx-auto min-h-screen">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 z-10">
     <form class="space-y-6" action="{% url 'App:signup' %}" method="post">
-      <h5 class="text-xl font-medium text-gray-900 dark:text-white">新規登録</h5>
-      <div>
-        <label for="userid" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">id</label>
-        <input type="text" name="userid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="user_id" required>
+      <div class="flex justify-between items-center">
+        <h5 class="text-xl font-medium text-gray-900 dark:text-white">新規登録</h5>
+        <a class="text-blue-700 hover:underline dark:text-blue-500" href="{% url 'App:list' %}">メイン画面に戻る</a>
       </div>
-      <div>
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">パスワード</label>
-        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.username.id_for_label }}">ユーザーid</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="{{ form.username.id_for_label }}" type="{{ form.username.field.widget.input_type }}" name="{{ form.username.html_name }}" value="{{ form.username.value|default:'' }}" placeholder="user_id" {% if form.username.field.required %}required{% endif %}>
       </div>
-      <div>
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">パスワード(再入力)</label>
-        <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.password1.id_for_label }}">パスワード</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="{{ form.password1.id_for_label }}" type="{{ form.password1.field.widget.input_type }}" name="{{ form.password1.html_name }}" value="{{ form.password1.value|default:'' }}" placeholder="••••••••" {% if form.password1.field.required %}required{% endif %}>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.password2.id_for_label }}">パスワード（確認用）</label>
+        <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" id="{{ form.password2.id_for_label }}" type="{{ form.password2.field.widget.input_type }}" name="{{ form.password2.html_name }}" value="{{ form.password2.value|default:'' }}" placeholder="••••••••" {% if form.password2.field.required %}required{% endif %}>
       </div>
       <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">新規登録</button>
       <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
