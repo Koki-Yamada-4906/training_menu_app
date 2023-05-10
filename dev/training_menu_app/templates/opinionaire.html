@@ -4,7 +4,8 @@
 
       <div class="w-full md:w-[1000px] md:max-w-full mx-auto z-10 text-xl h-screen overflow-auto">
         <div class="p-6 border border-gray-300 bg-gray-300">
-          <form method="POST" action="https://herotofu.com/start">
+          <form method="POST" action="{% url 'App:opinionaire' %}">
+            {% csrf_token %}
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q1.週に何回ジムに行けますか？</span>
               <div class="mt-2">
@@ -44,13 +45,13 @@
               </div>
               <div class="mt-2">
                 <label class="inline-flex items-center">
-                  <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                  <input name="division_all" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                   <span class="ml-2">全身法</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center">
-                  <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                  <input name="division_separate" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                   <span class="ml-2">分割法</span>
                 </label>
               </div>
@@ -59,7 +60,7 @@
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q4.特に鍛えたい部位はありますか？</span>
               <div class="mt-2">
-                <select name="period" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
+                <select name="like" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
                   <option>----</option>
                   <option>胸</option>
                   <option>背中</option>
@@ -74,7 +75,7 @@
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q5.特に鍛えたくない部位はありますか？</span>
               <div class="mt-2">
-                <select name="period" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
+                <select name="dislike" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
                   <option>----</option>
                   <option>胸</option>
                   <option>背中</option>
@@ -96,13 +97,13 @@
                 </div>
                 <div class="mt-2">
                   <label class="inline-flex items-center">
-                    <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="free_weight" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">フリーウェイト</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center">
-                    <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="machine" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">マシン</span>
                   </label>
                 </div>
@@ -115,19 +116,19 @@
                 </div>
                 <div class="mt-2">
                   <label class="inline-flex items-center">
-                    <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="muscular" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">筋肥大</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center">
-                    <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="muscle_force" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">筋力増強</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center">
-                    <input name="frequency" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="shape_up" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">シェイプアップ</span>
                   </label>
                 </div>

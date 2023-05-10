@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, OpinionaireForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -84,9 +84,14 @@ def other_view(request):
 
     return render(request, 'other.html', params)
 
-#アンケート画面
+#アンケート画面    
 def opinionaire_view(request):
-    
-    return render(request, 'opinionaire.html')
+    if request.method == 'POST':
+        form = OpinionaireForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['select'])
+    else:
+        form = OpinionaireForm()
 
-
+    context = {'form': form}
+    return render(request, 'opinionaire.html', context)
