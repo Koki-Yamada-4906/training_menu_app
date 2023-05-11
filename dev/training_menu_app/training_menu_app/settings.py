@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -133,3 +134,19 @@ LOGIN_URL = '/App_Folder/login/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# For debugging 
+if DEBUG:
+    # will output to your console
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+    )
+else:
+    # will output to logging file
+    logging.basicConfig(
+        level = logging.DEBUG,
+        format = '%(asctime)s %(levelname)s %(message)s',
+        filename = '/my_log_file.log',
+        filemode = 'a'
+    )

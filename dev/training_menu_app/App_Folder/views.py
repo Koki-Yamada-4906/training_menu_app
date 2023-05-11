@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from .forms import SignupForm, LoginForm, OpinionaireForm
 from django.contrib.auth import login, logout, authenticate
@@ -87,11 +88,87 @@ def other_view(request):
 #アンケート画面    
 def opinionaire_view(request):
     if request.method == 'POST':
-        form = OpinionaireForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data['select'])
+        frequency = request.POST.get('FREQUENCY_CHOICES')
+        period = request.POST.get('PERIOD_CHOICES')
+        division = request.POST.get('DIVISION_CHOICES')
+        like = request.POST.get('LIKE_CHOICES')
+        dislike = request.POST.get('DISLIKE_CHOICES')
+        apparatus = request.POST.get('APPARATUS_CHOICES')
+        purpose = request.POST.get('PURPOSE_CHOICES')
+
+        return render(request, 'result.html', {'frequency': frequency, 'period': period, 'division': division, 'like': like, 'dislike': dislike, 'apparatus': apparatus, 'purpose': purpose})
+
     else:
         form = OpinionaireForm()
 
-    context = {'form': form}
-    return render(request, 'opinionaire.html', context)
+    return render(request, 'opinionaire.html', {'form': form})       
+    
+    
+    # if request.method == 'GET':
+    #     return render(request, 'opinionaire.html', {'form': OpinionaireForm()})
+   
+    # elif request.method == 'POST':
+    #     form = OpinionaireForm(request.POST)
+    #     if not form.is_valid():
+    #         return render(request, 'opinionaire.html', {'form': form, 'errors': form.errors})
+        
+    #     frequency = form.cleaned_data['frequency']
+    #     period = form.cleaned_data['period']
+    #     division = form.cleaned_data['division']
+    #     like = form.cleaned_data['like']
+    #     dislike = form.cleaned_data['dislike']
+    #     apparatus = form.cleaned_data['apparatus']
+    #     purpose = form.cleaned_data['purpose']
+    #     return render(request, 'result.html', {'frequency': frequency, 'period': period, 'division': division, 'like': like, 'dislike': dislike, 'apparatus': apparatus, 'purpose': purpose})
+  
+      
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    # if request.method == 'POST':
+    #     form = OpinionaireForm(request.POST)
+    #     if form.is_valid():
+    #         frequency = form.cleaned_data['frequency']
+    #         period = form.cleaned_data['period']
+    #         division = form.cleaned_data['division']
+    #         like = form.cleaned_data['like']
+    #         dislike = form.cleaned_data['dislike']
+    #         apparatus = form.cleaned_data['apparatus']
+    #         purpose = form.cleaned_data['purpose']
+
+    #         print(frequency)
+    #         print(period)
+    #         print(division)
+    #         print(like)
+    #         print(dislike)
+    #         print(apparatus)
+    #         print(purpose)
+
+    #         return render(request, 'result.html')
+    # else:
+    #     form = OpinionaireForm()
+
+    # return render(request, 'opinionaire.html', {'form': form})

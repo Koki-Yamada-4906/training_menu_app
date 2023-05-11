@@ -14,5 +14,8 @@
         </a>
       </div>
     </div>
-</div>
+  </div>
+  {% for error in form.errors %}
+  {{ error }}
+  {% endfor %}
 {% endblock %}

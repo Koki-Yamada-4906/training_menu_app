@@ -4,34 +4,34 @@
 
       <div class="w-full md:w-[1000px] md:max-w-full mx-auto z-10 text-xl h-screen overflow-auto">
         <div class="p-6 border border-gray-300 bg-gray-300">
-          <form method="POST" action="{% url 'App:opinionaire' %}">
+          <form method="POST">
             {% csrf_token %}
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q1.週に何回ジムに行けますか？</span>
               <div class="mt-2">
-                <select name="frequency" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
-                  <option>----</option>
-                  <option>1回</option>
-                  <option>2回</option>
-                  <option>3回</option>
-                  <option>4回</option>
-                  <option>5回</option>
-                  <option>6回以上</option>
+                <select name="FREQUENCY_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8" required>
+                  <option value="" selected>----</option>
+                  <option value="1回">1回</option>
+                  <option value="2回">2回</option>
+                  <option value="3回">3回</option>
+                  <option value="4回">4回</option>
+                  <option value="5回">5回</option>
+                  <option value="6回">6回以上</option>
                 </select>
               </div>
             </label>
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q2.1回のトレーニングにどれくらい時間をかけられますか？</span>
               <div class="mt-2">
-                <select name="period" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
-                  <option>----</option>
-                  <option>30分</option>
-                  <option>1時間</option>
-                  <option>1.5時間</option>
-                  <option>2時間</option>
-                  <option>2.5時間</option>
-                  <option>3時間</option>
-                  <option>それ以上</option>
+                <select name="PERIOD_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8" required>
+                  <option value="" selected>----</option>
+                  <option value="30分">30分</option>
+                  <option value="1時間">1時間</option>
+                  <option value="1.5時間">1.5時間</option>
+                  <option value="2時間">2時間</option>
+                  <option value="2.5時間">2.5時間</option>
+                  <option value="3時間">3時間</option>
+                  <option value="それ以上">それ以上</option>
                 </select>
               </div>
             </label>
@@ -45,13 +45,13 @@
               </div>
               <div class="mt-2">
                 <label class="inline-flex items-center">
-                  <input name="division_all" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                  <input name="DIVIDION_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                   <span class="ml-2">全身法</span>
                 </label>
               </div>
               <div>
                 <label class="inline-flex items-center">
-                  <input name="division_separate" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                  <input name="DIVIDION_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                   <span class="ml-2">分割法</span>
                 </label>
               </div>
@@ -60,7 +60,7 @@
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q4.特に鍛えたい部位はありますか？</span>
               <div class="mt-2">
-                <select name="like" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
+                <select name="LIKE_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
                   <option>----</option>
                   <option>胸</option>
                   <option>背中</option>
@@ -75,7 +75,7 @@
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q5.特に鍛えたくない部位はありますか？</span>
               <div class="mt-2">
-                <select name="dislike" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
+                <select name="DISLIKE_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
                   <option>----</option>
                   <option>胸</option>
                   <option>背中</option>
@@ -97,13 +97,13 @@
                 </div>
                 <div class="mt-2">
                   <label class="inline-flex items-center">
-                    <input name="free_weight" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="APPARATUS_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">フリーウェイト</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center">
-                    <input name="machine" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="APPARATUS_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">マシン</span>
                   </label>
                 </div>
@@ -116,19 +116,19 @@
                 </div>
                 <div class="mt-2">
                   <label class="inline-flex items-center">
-                    <input name="muscular" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="PURPOSE_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">筋肥大</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center">
-                    <input name="muscle_force" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="PURPOSE_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">筋力増強</span>
                   </label>
                 </div>
                 <div>
                   <label class="inline-flex items-center">
-                    <input name="shape_up" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
+                    <input name="PURPOSE_CHOICES" type="radio" class="text-indigo-600 border-gray-300 rounded-full shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"/>
                     <span class="ml-2">シェイプアップ</span>
                   </label>
                 </div>
@@ -143,6 +143,17 @@
           </form>
         </div>
       </div>
+      {% if form.errors %}
+    <div class="alert alert-danger z-10" role="alert">
+        <strong>エラー:</strong>
+        {% for field in form %}
+            {% for error in field.errors %}
+                {{ error }}
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
+
 
 
   {% endblock %}

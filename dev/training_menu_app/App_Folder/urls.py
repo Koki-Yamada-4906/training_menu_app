@@ -13,7 +13,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('user/', views.user_view, name='user'),
     path('other/', views.other_view, name='other'),
-    path('opinionaire/', views.opinionaire_view, name='opinionaire')
+    path('opinionaire/', views.opinionaire_view, name='opinionaire'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
