@@ -1,3 +1,4 @@
+import openai
 import logging
 from django.shortcuts import render
 from .forms import SignupForm, LoginForm, OpinionaireForm
@@ -95,33 +96,30 @@ def opinionaire_view(request):
         dislike = request.POST.get('DISLIKE_CHOICES')
         apparatus = request.POST.get('APPARATUS_CHOICES')
         purpose = request.POST.get('PURPOSE_CHOICES')
-
-        return render(request, 'result.html', {'frequency': frequency, 'period': period, 'division': division, 'like': like, 'dislike': dislike, 'apparatus': apparatus, 'purpose': purpose})
-
+        
+        response = call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose)
+        
+        return render(request, 'result.html', {'response':response})        
     else:
         form = OpinionaireForm()
 
     return render(request, 'opinionaire.html', {'form': form})       
     
-    
-    # if request.method == 'GET':
-    #     return render(request, 'opinionaire.html', {'form': OpinionaireForm()})
-   
-    # elif request.method == 'POST':
-    #     form = OpinionaireForm(request.POST)
-    #     if not form.is_valid():
-    #         return render(request, 'opinionaire.html', {'form': form, 'errors': form.errors})
-        
-    #     frequency = form.cleaned_data['frequency']
-    #     period = form.cleaned_data['period']
-    #     division = form.cleaned_data['division']
-    #     like = form.cleaned_data['like']
-    #     dislike = form.cleaned_data['dislike']
-    #     apparatus = form.cleaned_data['apparatus']
-    #     purpose = form.cleaned_data['purpose']
-    #     return render(request, 'result.html', {'frequency': frequency, 'period': period, 'division': division, 'like': like, 'dislike': dislike, 'apparatus': apparatus, 'purpose': purpose})
-  
-      
+#文章生成
+def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose):
+    openai.api_key = "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"
+    prompt = "トレーニングのメニューを考えてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=1048,
+        n=1,
+        stop=None, 
+        temperature=1,
+    )
+    response = (response["choices"][0]["text"]).strip()
+    return response
+
 
 
     
