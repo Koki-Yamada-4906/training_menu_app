@@ -70,50 +70,13 @@ class OpinionaireForm(forms.Form):
     )
     frequency = forms.ChoiceField(choices=FREQUENCY_CHOICES, label='Q1.週に何回ジムに行けますか？', widget=forms.widgets.Select, required=True)
     period = forms.fields.ChoiceField(choices=PERIOD_CHOICES, label='Q2.1回のトレーニングにどれくらい時間をかけられますか？', widget=forms.widgets.Select, required=True)
-    division = forms.fields.ChoiceField(choices=DIVIDION_CHOICES, widget=forms.widgets.Select, required=True)
+    division = forms.fields.ChoiceField(choices=DIVIDION_CHOICES, widget=forms.widgets.RadioSelect(), required=True)
     like = forms.fields.ChoiceField(choices=LIKE_CHOICES, label='Q4.特に鍛えたい部位はありますか？', widget=forms.widgets.Select, required=True)
     dislike = forms.fields.ChoiceField(choices=DISLIKE_CHOICES, label='Q5.特に鍛えたくない部位はありますか？', widget=forms.widgets.Select, required=True)
-    apparatus = forms.fields.ChoiceField(choices=APPARATUS_CHOICES, widget=forms.widgets.Select, required=True)
-    purpose = forms.fields.ChoiceField(choices=PURPOSE_CHOICES, widget=forms.widgets.Select, required=True)
+    apparatus = forms.fields.ChoiceField(choices=APPARATUS_CHOICES, widget=forms.widgets.RadioSelect(), required=True)
+    purpose = forms.fields.ChoiceField(choices=PURPOSE_CHOICES, widget=forms.widgets.RadioSelect(), required=True)
     
-    def clean(self):
-        cleaned_data = super().clean()
-        return cleaned_data
-    
-    def clean_frequency(self):
-        frequency = self.cleaned_data['frequency']
-        return frequency
-    
-    def clean_period(self):
-        period = self.cleaned_data['period']
-        # periodに対する変換処理
-        return period
 
-    def clean_division(self):
-        division = self.cleaned_data['division']
-        # divisionに対する変換処理
-        return division
-
-    def clean_like(self):
-        like = self.cleaned_data['like']
-        # likeに対する変換処理
-        return like
-
-    def clean_dislike(self):
-        dislike = self.cleaned_data['dislike']
-        # dislikeに対する変換処理
-        return dislike
-
-    def clean_apparatus(self):
-        apparatus = self.cleaned_data['apparatus']
-        # apparatusに対する変換処理
-        return apparatus
-
-    def clean_purpose(self):
-        purpose = self.cleaned_data['purpose']
-        # purposeに対する変換処理
-        return purpose
-    
     
     
     

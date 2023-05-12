@@ -90,7 +90,7 @@ def opinionaire_view(request):
     if request.method == 'POST':
         frequency = request.POST.get('FREQUENCY_CHOICES')
         period = request.POST.get('PERIOD_CHOICES')
-        division = request.POST.get('DIVISION_CHOICES')
+        division = request.POST.get('DIVIDION_CHOICES')
         like = request.POST.get('LIKE_CHOICES')
         dislike = request.POST.get('DISLIKE_CHOICES')
         apparatus = request.POST.get('APPARATUS_CHOICES')
