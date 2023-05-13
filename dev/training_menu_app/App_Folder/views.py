@@ -107,7 +107,7 @@ def opinionaire_view(request):
     
 #文章生成
 def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose):
-    openai.api_key = "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"
+    openai.api_key = <YOUR API KEY>
     prompt = "トレーニングのメニューを考えてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
     response = openai.Completion.create(
         engine="text-davinci-003",
