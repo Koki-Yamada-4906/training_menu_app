@@ -1,5 +1,4 @@
 import openai
-import logging
 from django.shortcuts import render
 from .forms import SignupForm, LoginForm, OpinionaireForm
 from django.contrib.auth import login, logout, authenticate
@@ -107,66 +106,31 @@ def opinionaire_view(request):
     
 #文章生成
 def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose):
-    openai.api_key = <YOUR API KEY>
-    prompt = "トレーニングのメニューを考えてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
+    openai.api_key = "YOUR API KEY"
+    prompt = "トレーニングのメニューを考えてください。トレーニング内容は横並びで出力してください。出力のフォーマットは、〇回目　・トレーニング名(適切なメニュー数を表示)　としてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。また、そのメニューが何回目かを示してください".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1048,
         n=1,
         stop=None, 
-        temperature=1,
+        temperature=0,
     )
     response = (response["choices"][0]["text"]).strip()
+     
+    # response = "1回目 ・デッドリフト ・レッグプレス ・レッグカール ・バックエクステンション ・ラットプルダウン2回目 ・ショルダープレス ・レッグエクステンション ・レッグカール ・ラットプルダウン ・ラットロウ3回目 ・デッドリフト ・レッグプレス ・レッグエクステンション ・バックエクステンション ・ラットプルダウン4回目 ・ショルダープレス ・レッグプレス ・レッグカール ・バックエクステンション ・ラットロウ5回目 ・デッドリフト ・レッグプレス ・レッグエクステンション ・バックエクステンション ・ラットプルダウン6回目 ・ショルダープレス ・レッグプレス ・レッグカール ・バックエクステンション ・ラットロウ"
+    # print(response)
+    
+    #メニュー文の編集
+    targets = ['1回目', '2回目', '3回目', '4回目', '5回目', '6回目', '１回目', '２回目', '３回目', '４回目', '５回目', '６回目']
+    for target in targets:
+        response = response.replace(target, '</div> <div class="block w-auto p-6 bg-gray-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 mt-10 mb-5">' + target + '\n')
+    
+    print(response)
+    
     return response
 
+def result_view(request):
+    return render(request, 'result.html')
 
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # if request.method == 'POST':
-    #     form = OpinionaireForm(request.POST)
-    #     if form.is_valid():
-    #         frequency = form.cleaned_data['frequency']
-    #         period = form.cleaned_data['period']
-    #         division = form.cleaned_data['division']
-    #         like = form.cleaned_data['like']
-    #         dislike = form.cleaned_data['dislike']
-    #         apparatus = form.cleaned_data['apparatus']
-    #         purpose = form.cleaned_data['purpose']
-
-    #         print(frequency)
-    #         print(period)
-    #         print(division)
-    #         print(like)
-    #         print(dislike)
-    #         print(apparatus)
-    #         print(purpose)
-
-    #         return render(request, 'result.html')
-    # else:
-    #     form = OpinionaireForm()
-
-    # return render(request, 'opinionaire.html', {'form': form})

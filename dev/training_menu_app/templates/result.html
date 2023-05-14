@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Result</title>
-</head>
-<body>
-    <h1>Result</h1>
-    <p>{{ response }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content_block %}
+<div class="w-full md:w-[1000px] md:max-w-full mx-auto pb-20 z-10 text-xl h-screen overflow-auto">
+  <div class="z-10 mb-10">
+      {{ response | safe | linebreaksbr}}
+  </div>
+</div>
+  
+{% endblock %}
