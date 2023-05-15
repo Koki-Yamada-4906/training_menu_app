@@ -150,3 +150,4 @@ else:
         filename = '/my_log_file.log',
         filemode = 'a'
     )
+    

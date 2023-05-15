@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
+
 def template_view(request):
 
     return render(request, 'index.html')
@@ -106,19 +107,19 @@ def opinionaire_view(request):
     
 #文章生成
 def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose):
-    openai.api_key = "your api key"
-    prompt = "トレーニングのメニューを考えてください。トレーニング内容は横並びで出力してください。出力のフォーマットは、〇回目　・トレーニング名(適切なメニュー数を表示)　としてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。また、そのメニューが何回目かを示してください".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=1048,
-        n=1,
-        stop=None, 
-        temperature=0,
-    )
-    response = (response["choices"][0]["text"]).strip()
+    # openai.api_key = "your api key"
+    # prompt = "トレーニングのメニューを考えてください。トレーニング内容は横並びで出力してください。出力のフォーマットは、〇回目　・トレーニング名(適切なメニュー数を表示)　としてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。また、そのメニューが何回目かを示してください".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
+    # response = openai.Completion.create(
+    #     engine="text-davinci-003",
+    #     prompt=prompt,
+    #     max_tokens=1048,
+    #     n=1,
+    #     stop=None, 
+    #     temperature=0,
+    # )
+    # response = (response["choices"][0]["text"]).strip()
      
-    # response = "1回目 ・デッドリフト ・レッグプレス ・レッグカール ・バックエクステンション ・ラットプルダウン2回目 ・ショルダープレス ・レッグエクステンション ・レッグカール ・ラットプルダウン ・ラットロウ3回目 ・デッドリフト ・レッグプレス ・レッグエクステンション ・バックエクステンション ・ラットプルダウン4回目 ・ショルダープレス ・レッグプレス ・レッグカール ・バックエクステンション ・ラットロウ5回目 ・デッドリフト ・レッグプレス ・レッグエクステンション ・バックエクステンション ・ラットプルダウン6回目 ・ショルダープレス ・レッグプレス ・レッグカール ・バックエクステンション ・ラットロウ"
+    response = "1回目 ・デッドリフト ・レッグプレス ・レッグカール ・バックエクステンション ・ラットプルダウン2回目 ・ショルダープレス ・レッグエクステンション ・レッグカール ・ラットプルダウン ・ラットロウ3回目 ・デッドリフト ・レッグプレス ・レッグエクステンション ・バックエクステンション ・ラットプルダウン4回目 ・ショルダープレス ・レッグプレス ・レッグカール ・バックエクステンション ・ラットロウ5回目 ・デッドリフト ・レッグプレス ・レッグエクステンション ・バックエクステンション ・ラットプルダウン6回目 ・ショルダープレス ・レッグプレス ・レッグカール ・バックエクステンション ・ラットロウ"
     # print(response)
     
     #メニュー文の編集
@@ -128,9 +129,12 @@ def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpo
     
     print(response)
     
+    
+    
     return response
 
 def result_view(request):
     return render(request, 'result.html')
+
 
 

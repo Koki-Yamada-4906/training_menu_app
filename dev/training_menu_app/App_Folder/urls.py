@@ -15,6 +15,7 @@ urlpatterns = [
     path('other/', views.other_view, name='other'),
     path('opinionaire/', views.opinionaire_view, name='opinionaire'),
     path('result/', views.result_view, name='result'),
+    path('user/', views.user_view, name='user'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
