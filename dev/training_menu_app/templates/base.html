@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>筋トレメニューアプリ(仮)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&family=Noto+Sans+JP&display=swap" rel="stylesheet">
@@ -21,8 +21,9 @@
       <nav>
         <ul class="flex gap-4">
           {% if user.is_authenticated %}
-            <li><a href="/result">マイページ</a></li>
-            <li><a href="/user">ようこそ：{{ user.username }} さん</a></li>
+            <li class="text-center"><!--<a href="/user">-->ようこそ：{{ user.username }} さん</a></li>
+            <li><a href="/mypage">マイページ</a></li>
+            <li><a href="#" onclick="confirmLogout()">ログアウト</a></li>
           {% else %}
             <li><a href="/login">ログイン</a></li>
             <li><a href="/signup">新規登録</a></li>
@@ -35,3 +36,13 @@
         {% block content_block %}
         {% endblock %}
     </div>
+    <script>
+      function confirmLogout() {
+          if (confirm('ログアウトしますか？')) {
+              window.location.href = "/logout";
+          }
+      }
+    </script>
+  
+  </body>
+</html>

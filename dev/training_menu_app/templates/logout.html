@@ -1,12 +1,11 @@
-{% load static %}
-<!doctype html>
-<html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <title>ログアウト</title>
-</head>
-<body>
-    <p>ログアウトしました。</p>
-</body>
+{% extends "base.html" %}
 
-</html>
+{% block content_block %}
+
+  <div class="z-20 flex items-center justify-center px-auto mx-auto h-[800px]">
+    <div class="p-6 bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <a>ログアウトが完了しました。</a>
+    </div>
+  </div>
+
+{% endblock %}

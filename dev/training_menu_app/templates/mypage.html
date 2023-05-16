@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content_block %}
+    {% if workout_model %}
+      <div class="flex w-full md:w-[1000px] md:max-w-full mx-auto pb-20 z-10 text-xl h-screen overflow-scroll">
+        <div class="z-10 mb-10 hidden-scrollbar">
+          {{ workout_model.response | safe | linebreaksbr}}
+        </div>
+      </div>
+    {% else %}
+        <div class="z-20 flex items-center justify-center px-auto mx-auto h-[800px]">
+          <div class="p-6 bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <a href="#">
+                  <h5 class="mb-10 text-2xl font-bold tracking-tight text-gray-900 dark:text-white flex justify-center">マッチョへの道も一歩から</h5>
+              </a>
+              <img class="h-[300px] mb-10" src="../media/trainee.png" alt="トレーニーの男女">
+              <p class="mb-10 font-normal text-gray-700 dark:text-gray-400 flex justify-center">まずはアンケートに答えて、自分に合ったメニューを組んでもらいましょう！</p>
+              <div class="px-auto mx-auto flex items-center justify-center">
+                <a href="/opinionaire" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-gray-400 rounded-lg hover:bg-gray-600">
+                    アンケート
+                </a>
+              </div>
+          </div>
+        </div>
+    {% endif %}
+    
+    
+  </div>
+  <!-- 本番環境では削除すること！ -->
+  <!-- <a class="bg-white text-red-600" href="/model_delete">モデルの全削除</a> -->
+</div>
+
+
+{% endblock %}

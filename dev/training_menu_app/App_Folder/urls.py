@@ -16,6 +16,8 @@ urlpatterns = [
     path('opinionaire/', views.opinionaire_view, name='opinionaire'),
     path('result/', views.result_view, name='result'),
     path('user/', views.user_view, name='user'),
+    path('mypage/', views.mypage_view, name='mypage'),
+    path('model_delete', views.model_delete_view, name='model_delete'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

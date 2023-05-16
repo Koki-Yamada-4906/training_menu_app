@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from .models import Workout
 
 
 def template_view(request):
@@ -97,7 +98,9 @@ def opinionaire_view(request):
         apparatus = request.POST.get('APPARATUS_CHOICES')
         purpose = request.POST.get('PURPOSE_CHOICES')
         
-        response = call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose)
+        author = request.user if request.user.is_authenticated else None
+        
+        response = call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, author)
         
         return render(request, 'result.html', {'response':response})        
     else:
@@ -106,7 +109,7 @@ def opinionaire_view(request):
     return render(request, 'opinionaire.html', {'form': form})       
     
 #文章生成
-def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose):
+def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, author):
     # openai.api_key = "your api key"
     # prompt = "トレーニングのメニューを考えてください。トレーニング内容は横並びで出力してください。出力のフォーマットは、〇回目　・トレーニング名(適切なメニュー数を表示)　としてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。また、そのメニューが何回目かを示してください".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
     # response = openai.Completion.create(
@@ -129,12 +132,19 @@ def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpo
     
     print(response)
     
-    
-    
+    workout = Workout(response=response, author=author)
+    workout.save()
     return response
 
 def result_view(request):
     return render(request, 'result.html')
 
+def mypage_view(request):
+    workout_model = Workout.objects.order_by('-id').first() 
+    context = {'workout_model':workout_model}
+    return render(request, 'mypage.html', context)
 
+def model_delete_view(request):
+    Workout.objects.all().delete()
+    return render(request, 'mypage.html')
 
