@@ -98,6 +98,19 @@ def opinionaire_view(request):
         apparatus = request.POST.get('APPARATUS_CHOICES')
         purpose = request.POST.get('PURPOSE_CHOICES')
         
+        print(like, dislike)
+        
+        #鍛えたい部位と鍛えたくない部位が重複していた時の処理
+        try:
+            # 鍛えたい部位と鍛えたくない部位が重複していた場合に例外を発生させる
+            if like == dislike and (like, dislike) not in [('特になし', '特になし')]:
+                raise ValueError("同じ部位で回答しています。もう一度やり直してください！")
+        except ValueError as e:
+            # 例外メッセージをコンテキストに追加してテンプレートをレンダリング
+            context = {'error_message': str(e)}
+            return render(request, 'opinionaire.html', context)
+            
+        
         author = request.user if request.user.is_authenticated else None
         
         response = call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, author)

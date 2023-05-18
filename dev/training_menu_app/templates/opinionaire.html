@@ -5,6 +5,9 @@
       <div class="w-full md:w-[1000px] md:max-w-full mx-auto z-10 text-xl h-screen overflow-auto">
         <div class="p-6 border border-gray-300 bg-gray-300">
           <form method="POST">
+            
+            <!-- その他のコンテンツ -->
+            
             {% csrf_token %}
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q1.週に何回ジムに行けますか？</span>
@@ -59,9 +62,12 @@
             </div>
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q4.特に鍛えたい部位はありますか？</span>
+              {% if error_message %}
+              <div class="bg-red-500 text-white">{{ error_message }}</div>
+              {% endif %}
               <div class="mt-2">
-                <select name="LIKE_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
-                  <option>----</option>
+                <select name="LIKE_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8" required>
+                  <option value="" selected>----</option>
                   <option>胸</option>
                   <option>背中</option>
                   <option>脚</option>
@@ -74,9 +80,12 @@
             </label>
             <label class="block mb-6">
               <span class="text-gray-700 text-xl">Q5.特に鍛えたくない部位はありますか？</span>
+              {% if error_message %}
+              <div class="mt-3"><span class="bg-red-500 text-white">{{ error_message }}</span></div>
+              {% endif %}
               <div class="mt-2">
-                <select name="DISLIKE_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8">
-                  <option>----</option>
+                <select name="DISLIKE_CHOICES" class="block w-full rounded-md shadow-sm border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 my-8" required>
+                  <option value="" selected>----</option>
                   <option>胸</option>
                   <option>背中</option>
                   <option>脚</option>
