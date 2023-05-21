@@ -1,5 +1,5 @@
 import openai
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import SignupForm, LoginForm, OpinionaireForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -19,9 +19,15 @@ def signup_view(request):
     if request.method == 'POST':
 
         form = SignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-
+        # if form.is_valid():
+        # user = form.save()
+        userid = request.POST['username']
+        password = request.POST['password1']
+        user = authenticate(request, userid=userid, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('')
+            
     else:
         form = SignupForm()
     
@@ -104,7 +110,8 @@ def opinionaire_view(request):
         try:
             # 鍛えたい部位と鍛えたくない部位が重複していた場合に例外を発生させる
             if like == dislike and (like, dislike) not in [('特になし', '特になし')]:
-                raise ValueError("同じ部位で回答しています。もう一度やり直してください！")
+                raise ValueError('<div class="alert-div bg-red-100 border border-red-400 text-red-700 px-2 py-2 rounded relative" role="alert"><span class="block sm:inline">同じ部位が選択されていました。もう一度やり直してください！</span></div>')
+                                
         except ValueError as e:
             # 例外メッセージをコンテキストに追加してテンプレートをレンダリング
             context = {'error_message': str(e)}

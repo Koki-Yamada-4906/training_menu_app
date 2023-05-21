@@ -2,8 +2,8 @@
 
 {% block content_block %}
     {% if workout_model %}
-      <div class="flex w-full md:w-[1000px] md:max-w-full mx-auto pb-20 z-10 text-xl h-screen overflow-scroll">
-        <div class="z-10 mb-10 hidden-scrollbar">
+      <div class="flex w-full md:w-[1000px] md:max-w-full mx-auto pb-20 z-10 text-xl h-screen overflow-scroll flex-col">
+        <div class="z-10 mb-10">
           {{ workout_model.response | safe | linebreaksbr}}
         </div>
       </div>

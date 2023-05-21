@@ -9,6 +9,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&family=Noto+Sans+JP&display=swap" rel="stylesheet">
+    <script>
+      // function fadeOutElementsByClass(className) {
+      //   var elements = document.getElementsByClassName(className);
+
+      //   // 要素が存在するかを確認
+      //   if (elements.length > 0) {
+      //     for (var i = 0; i < elements.length; i++) {
+      //       var element = elements[i];
+      //       element.classList.add("opacity-0", "duration-500"); // フェードアウト用のクラスを追加
+
+      //       setTimeout(function(el) {
+      //         el.style.display = "none"; // アニメーション終了後に要素を非表示にする
+      //       }, 1000, element); // アニメーションの時間（ミリ秒）
+      //     }
+      //   }
+      // }
+
+      // // ページ読み込み後に数秒後に要素をフェードアウトするタイマーを設定
+      // window.onload = function() {
+      //   setTimeout(function() {
+      //     fadeOutElementsByClass("alert-div");
+      //   }, 4000); // 5000ミリ秒（5秒）後にfadeOutElementsByClass関数を実行
+      // };
+    </script>
   </head>
   <body style="font-family: 'M PLUS Rounded 1c', sans-serif;
   font-family: 'Noto Sans JP', sans-serif;">
@@ -21,9 +45,9 @@
       <nav>
         <ul class="flex gap-4">
           {% if user.is_authenticated %}
-            <li class="text-center"><!--<a href="/user">-->ようこそ：{{ user.username }} さん</a></li>
+            <li class="text-center">ようこそ：{{ user.username }} さん</a></li>
             <li><a href="/mypage">マイページ</a></li>
-            <li><a href="#" onclick="confirmLogout()">ログアウト</a></li>
+            <li><a href="/logout" onclick="confirmLogout()">ログアウト</a></li>
           {% else %}
             <li><a href="/login">ログイン</a></li>
             <li><a href="/signup">新規登録</a></li>
