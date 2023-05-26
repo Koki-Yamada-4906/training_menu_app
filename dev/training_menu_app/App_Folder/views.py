@@ -1,9 +1,10 @@
 import openai
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import SignupForm, LoginForm, OpinionaireForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from .models import Workout
@@ -19,15 +20,9 @@ def signup_view(request):
     if request.method == 'POST':
 
         form = SignupForm(request.POST)
-        # if form.is_valid():
-        # user = form.save()
-        userid = request.POST['username']
-        password = request.POST['password1']
-        user = authenticate(request, userid=userid, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('')
-            
+        if form.is_valid():
+            form.save()
+
     else:
         form = SignupForm()
     
@@ -68,7 +63,6 @@ def login_view(request):
 #ログアウト処理
 def logout_view(request):
     logout(request)
-    
     return render(request, 'logout.html')
 
 #ログインユーザー情報表示処理
@@ -110,7 +104,7 @@ def opinionaire_view(request):
         try:
             # 鍛えたい部位と鍛えたくない部位が重複していた場合に例外を発生させる
             if like == dislike and (like, dislike) not in [('特になし', '特になし')]:
-                raise ValueError('<div class="alert-div bg-red-100 border border-red-400 text-red-700 px-2 py-2 rounded relative" role="alert"><span class="block sm:inline">同じ部位が選択されていました。もう一度やり直してください！</span></div>')
+                raise ValueError('<div class="alert-div bg-red-100 border border-red-400 text-red-700 px-2 py-2 rounded relative" role="alert"><span class="block sm:inline">同じ部位が選択されました。もう一度やり直してください！</span></div>')
                                 
         except ValueError as e:
             # 例外メッセージをコンテキストに追加してテンプレートをレンダリング
@@ -118,9 +112,9 @@ def opinionaire_view(request):
             return render(request, 'opinionaire.html', context)
             
         
-        author = request.user if request.user.is_authenticated else None
+        user = request.user if request.user.is_authenticated else None
         
-        response = call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, author)
+        response = call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, user)
         
         return render(request, 'result.html', {'response':response})        
     else:
@@ -129,7 +123,7 @@ def opinionaire_view(request):
     return render(request, 'opinionaire.html', {'form': form})       
     
 #文章生成
-def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, author):
+def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpose, user):
     # openai.api_key = "your api key"
     # prompt = "トレーニングのメニューを考えてください。トレーニング内容は横並びで出力してください。出力のフォーマットは、〇回目　・トレーニング名(適切なメニュー数を表示)　としてください。一回のトレーニング時間は{period}です。トレーニング方法は{division}で、{like}の種目を多めに取り入れて、{dislike}の種目は1種目だけ軽めのを取り入れます。{apparatus}をメインにし、目的は{purpose}です。これを踏まえて{frequency}に分けてください。また、そのメニューが何回目かを示してください".format(frequency=frequency, period=period, division=division, like=like, dislike=dislike, apparatus=apparatus, purpose=purpose)
     # response = openai.Completion.create(
@@ -152,19 +146,27 @@ def call_openai_gpt(frequency, period, division, like, dislike, apparatus, purpo
     
     print(response)
     
-    workout = Workout(response=response, author=author)
+    
+    workout = Workout(response=response, user=user)
     workout.save()
     return response
 
 def result_view(request):
     return render(request, 'result.html')
 
+@login_required
 def mypage_view(request):
-    workout_model = Workout.objects.order_by('-id').first() 
-    context = {'workout_model':workout_model}
-    return render(request, 'mypage.html', context)
-
+    user_id = request.user.id
+    if user_id:    
+        workout_model = Workout.objects.filter(user_id=user_id).order_by('-id').first() 
+        context = {'workout_model':workout_model}
+        return render(request, 'mypage.html', context)
+    else:
+        return render(request, "mypage.html")
+    
 def model_delete_view(request):
     Workout.objects.all().delete()
     return render(request, 'mypage.html')
+
+
 
